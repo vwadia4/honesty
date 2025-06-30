@@ -1,0 +1,12 @@
+/*add margins to the logins*/
+#logincard{
+    margin-top: 200px; align-items: center; 
+}
+
+h3{
+    color: black font-weight: bold;
+}
+
+h4{
+    color: blue; font-size: large;
+}
