@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Young for Chicks - Users</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+    body {
+    font-family: Arial, sans-serif;
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    background-color: #f1f1f1;
+    background: url(/public/images/ga-con1.jpg)
+    }
+    input, button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    }
+</style>
+</head>
+
+<body>
+    <!-- Farmer details -->
+    <div class="container py-5">
+        <h4>Welcome To SignUp Page</h4>
+        <form action="" id="SignUp">
+            <div class="mb-3">
+                <label for="farmerName">Farmer Name</label>
+                <input type="text" id="farmerName" class="form-control" placeholder="Farmer name">
+            </div>
+
+            <div class="mb-3">
+                <label for="farmerGender">Gender</label>
+                <select id="farmerGender" class="form-select">
+                    <option value="">Select</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="farmerDob">Date of Birth</label>
+                <input type="date" class="form-control" id="farmerDob">
+            </div>
+
+            <div class="mb-3">
+                <label for="contact number">Contact</label>
+                <input type="text" id="contact" name="contact" class="form-control" placeholder="contact number">
+            </div>
+
+            <div class="mb-3">
+                <label for="email"></label>Email Adress</label>
+                <input type="text" id="email" name="email" class="form-control" placeholder="email address">
+            </div>
+
+            <div class="mb-3">
+                <label for="password"></label>Password</label>
+                <input type="text" id="password" name="password" class="form-control" placeholder="Type password">
+            </div>
+
+            <div class="mb-3">
+                <label for="farmerNin">National ID Number</label>
+                <input type="text" id="farmerNin" class="form-control" placeholder="Type NIN number">
+            </div>
+
+            <div class="mb-3">
+                <button type="summit" class="btn btn-primary" onclick="addFarmer()">Summit Farmer</button>
+                <button id="deleteFarmerBtn" class="btn btn-danger">Delete</button>
+                <button id="editFarmerBtn" class="btn btn-secondary">Update</button>
+            </div>
+            <div>
+                <p>Already have an account?</p>
+                <button for="login">login</button>
+            </div>
+
+        </form>
+    </div>
+
+</body>
+
+</html>

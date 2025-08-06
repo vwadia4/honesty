@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Young for Chicks - Feeds</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+    crossorigin="anonymous" />
+</head>
+<style>
+  body {
+    background-image: url('/public/images/starters.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    border-color: #4CAF50;
+    border: 20px;
+    background-image: cross-fade(50px);
+  }
+
+  div {
+    height: 50px;
+    width: 70%;
+    border: 2px solid #4CAF50;
+    font-size: larger;
+  }
+
+  .card {
+    margin-top: 50px;
+    background-color: rgba(255, 255, 255, 0.95);
+  }
+
+  h1 {
+    align-content: center;
+  }
+</style>
+
+<body class="container mt-4">
+  <h1 class="mb-4">Feeds Request Form</h1>
+  <form id="feedsForm">
+    <div class="mb-3">
+      <label for="farmerName" class="form-label">Farmer Name</label>
+      <input type="text" id="farmerName" name="farmerName" class="form-control" placeholder="Enter farmer name" />
+    </div>
+    <br>
+    <div class="mb-3">
+      <label for="amountFeeds" class="form-label">Feeds Amount</label>
+      <input type="text" id="amountFeeds" name="amountFeeds" class="form-control"
+        placeholder="e.g. 2 bags for 2 months" />
+    </div>
+    <br>
+    <div class="mb-3">
+      <label for="feeds cost" class="form-label">Feeds Cost</label>
+      <input type="number" id="feedCost" name="feedCost" class="form-control" placeholder="Enter Price for 2bags" />
+    </div>
+    <br>
+    <div class="mb-3">
+      <label for="feedDate" class="form-label">Date</label>
+      <input type="date" id="feedDate" name="feedDate" class="form-control" />
+    </div>
+    <br>
+    <div class="mb-3">
+      <label for="nextFeeds" class="form-label">Next Feeds</label>
+      <input type="date" id="nextFeeds" name="nextFeeds" class="form-control" placeholder="Next feed after 2months" />
+    </div>
+    <br>
+    <div class="mb-3">
+      <label for="comments" class="form-label">Comments</label>
+      <input type="text" id="comments" class="form-control" placeholder="Typr your comment" />
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+  </form>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+    crossorigin="anonymous"></script>
+
+  <script src="./feed.js"></script>
+</body>
+
+</html>

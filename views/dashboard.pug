@@ -1,0 +1,82 @@
+extends layout
+
+block content
+  .container-fluid.mt-4
+    .row.mb-4.text-center
+      each box in [
+        { title: 'Total Chicks', value: totalChicks, color: 'success', link: '/export/chicks' },
+        { title: 'Total Farmers', value: totalFarmers, color: 'primary', link: '/export/farmers' },
+        { title: 'Total Requests', value: totalRequests, color: 'warning', link: '/export/requests' },
+        { title: 'Total Feeds', value: totalFeeds, color: 'info', link: '/export/feeds' }
+      ]
+        .col-md-3
+          .card.border-#{box.color}.shadow-sm
+            .card-header.bg-#{box.color}.text-white
+              h5 #{box.title}
+            .card-body
+              h3= box.value
+            a.btn.btn-success.mb-2(href=box.link)
+              i.fa.fa-file-csv
+              |  Export (CSV)
+
+  // Pending Chick Requests
+  .row.mb-4
+    .col-12
+      .card.border-info
+        .card-header.bg-info.text-white
+          h4 Pending Chick Requests
+        .card-body
+          table.table.table-hover
+            thead.table-light
+              tr
+                th Date
+                th Total Chicks
+                th Farmer
+                th Sales Rep
+                th Amount (UGX)
+                th Actions
+            tbody
+              each req in pendingRequests
+                tr
+                  td= req.date.toISOString().substring(0,10)
+                  td= req.quantity
+                  td= req.farmer.name
+                  td= req.salesRep.name
+                  td= req.amount
+                  td
+                    a.btn.btn-sm.btn-primary.me-1(href=`/requests/${req._id}/edit`)
+                      i.fa.fa-edit
+                      |  Update
+                    form.d-inline(action=`/requests/${req._id}?_method=DELETE`, method="POST")
+                      button.btn.btn-sm.btn-danger(type="submit")
+                        i.fa.fa-trash
+                        |  Delete
+
+  // Pending Chick Payments
+  .row.mb-4
+    .col-12
+      .card.border-warning
+        .card-header.bg-warning.text-dark
+          h4 Pending Chick Payments
+        .card-body
+          table.table.table-hover
+            thead.table-light
+              tr
+                th Due Date
+                th Farmer
+                th Amount (UGX)
+                th Actions
+            tbody
+              each pay in pendingPayments
+                tr
+                  td= pay.dueDate.toISOString().substring(0,10)
+                  td= pay.farmer.name
+                  td= pay.amount
+                  td
+                    a.btn.btn-sm.btn-primary.me-1(href=`/payments/${pay._id}/edit`)
+                      i.fa.fa-edit
+                      |  Update
+                    form.d-inline(action=`/payments/${pay._id}?_method=DELETE`, method="POST")
+                      button.btn.btn-sm.btn-danger(type="submit")
+                        i.fa.fa-trash
+                        |  Delete

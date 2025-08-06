@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forms And Tables</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <style>
+        div {
+            height: 50px;
+            width: 700px;
+            background-color: powderblue;
+        }
+
+        body {
+            background-image: url("/images/863f8b4de0d8e16a6addd50c265e0f0c.jpg");
+            background-position: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Chicks Request Form</h2>
+
+    <form action="" id="requests">
+        <div class="mb-3">
+            <label for="farmer name">Farmer name</label>
+            <input type="text" id="farmerName" name="farmerName"></input>
+        </div>
+
+        <div class="mb-3">
+            <label for="farmer age">Farmer age</label>
+            <input type="text" id="age" name="age" placeholder="18-30 years"></input>
+        </div>
+
+        <div class="mb-3">
+            <label for="farmer type">Farmer Type</label>
+            <select type="text" id="farmerType" class="form-select" name="farmerType">
+                <option value="">Select</option>
+                <option value="newFarmer">New Farmer</option>
+                <option value="returnFarmer">Return Farmer</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="Chick Quantity">Quantity</label>
+            <input type="number" for="quantity" id="quantity" placeholder="Enter Chick Quantity" name="quantity">
+        </div>
+
+        <div class="mb-3">
+            <label for="category">Category</label>
+            <select type="text" name="category" id="category" class="form-select" name="category">
+                <option value="">Select Category</option>
+                <option value="local">Local</option>
+                <option value="exotic">Exotic</option>
+
+            </select>
+        </div>
+        <div class="mb-3">
+            <label type="text" for="chickType">Chick Type</label>
+            <select name="chickType" id="chickType">
+                <option value="">select</option>
+                <option value="boiler">Broiler</option>
+                <option value="layer">Layer</option>
+
+            </select>
+        </div>
+
+        <button type="submit">submit Request</button>
+        <p id="errorMsg" class="error"></p>
+
+        <h2>Farmers Request List</h2>
+
+        <div class="mb-3">
+            <table class="table" id="requestTable">
+                <tbody>
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Age</th>
+                            <th scope="col">Farmer Type</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Chick Type</th>
+                        </tr>
+                    </thead>
+                </tbody>
+
+            </table>
+        </div>
+
+        <script src="./requests.js"></script>
+        <script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+            crossorigin="anonymous"></script>
+</body>
+
+</html>

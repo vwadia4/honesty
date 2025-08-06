@@ -1,0 +1,23 @@
+#logincard {
+    margin-top: 200px;
+    align-items: center;
+}
+
+h3 {
+    color: black;
+    font-weight: bold;
+}
+
+h4 {
+    color: blue;
+    font-size: large;
+}
+
+body {
+    background-image: url('image/wp5790321.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+
+}
