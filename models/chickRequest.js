@@ -10,16 +10,15 @@ const chickRequestSchema = new mongoose.Schema({
     required: true
   },
   farmer: {
-    type: String,
-    required: true
+    type: { type: mongoose.Schema.Types.ObjectId, ref: 'Farmer' },
   },
   salesRep: {
     type: String,
     required: true
   },
   amount: {
-    type: Number,
-    required: true
+    type: String, enum: ['pending', 'approved', 'rejected', 'dispatched'], default: 'pending'
+    
   }
 });
 

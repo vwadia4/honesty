@@ -31,7 +31,7 @@ html(lang='en')
       }
   body.container.mt-4
     h1.mb-4 Feeds Request Form
-    form#feedsForm
+    form#feedsForm(method='POST' action='feeds')
       .mb-3
         label.form-label(for='farmerName') Farmer Name
         input#farmerName.form-control(type='text', name='farmerName', placeholder='Enter farmer name')

@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  h2 Edit Brood Manager Details
+  form(action=`/brood-managers/edit/${broodManager._id}` method="POST")
+    div
+      label(for="name") Name:
+      input(type="text" name="name" id="name" value=broodManager.name required)
+    div
+      label(for="gender") Gender:
+      select(name="gender" id="gender" required)
+        option(value="Male" selected=broodManager.gender==="Male") Male
+        option(value="Female" selected=broodManager.gender==="Female") Female
+    div
+      label(for="email") Email:
+      input(type="email" name="email" id="email" value=broodManager.email required)
+    div
+      label(for="nin") National ID (NIN):
+      input(type="text" name="nin" id="nin" value=broodManager.nin required)
+    div
+      label(for="dob") Date of Birth:
+      input(type="date" name="dob" id="dob" value=broodManager.dob)
+    div
+      label(for="phone") Phone:
+      input(type="text" name="phone" id="phone" value=broodManager.phone)
+    div
+      label(for="approvalLimit") Approval Limit:
+      input(type="number" name="approvalLimit" id="approvalLimit" value=broodManager.approvalLimit)
+    button(type="submit") Save Changes

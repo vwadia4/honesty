@@ -1,12 +1,80 @@
 doctype html
-html
+html(lang='en')
   head
-    title Login - Young Farmer
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title Young4Chicks - Login
+    link(rel='stylesheet', href='../css/custom.css')
+    link(rel='stylesheet', href='../css/js/bootstrap.js')
+    link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css', rel='stylesheet', integrity='sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr', crossorigin='anonymous')
+    script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js', integrity='sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q', crossorigin='anonymous')
+    style.
+      body {
+      background-image: url("/public/images/wp5790321.webp");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      min-height: 100vh;
+      }
+      #logincard {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #fff;
+      }
+      .card {
+      margin-top: 50px;
+      background-color: rgba(255, 255, 255, 0.95);
+      }
+      ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #22227b6d;
+      }
+      li {
+      float: left;
+      }
+      li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      }
+      li a:hover {
+      background-color: #111111;
+      }
   body
-    h2 Farmer Login
-    form(action="/login", method="POST")
-      label(for="email") Email:
-      input(type="email", name="email", required)
-      label(for="password") Password:
-      input(type="password", name="password", required)
-      button(type="submit") Login
+    ul
+      li
+        a.active(href='#home') Home
+      li
+        a(href='#news') News
+      li
+        a(href='#contact') Contact
+      li
+        a(href='#about') About
+    .container
+      .row.justify-content-center
+        .col-md-6
+          h3#logincard Welcome to Young For Chicks
+          .card.border-primary
+            .card-header.bg-primary.text-white
+              | Login to your account
+            .card-body
+              form(action='login', method='post')
+                .mb-3
+                  label.form-label(for='exampleInputUsername') Username
+                  input#exampleInputUsername.form-control(type='text', name='username')
+                .mb-3
+                  label.form-label(for='exampleInputPassword') Password
+                  input#exampleInputPassword.form-control(type='password', name='password')
+                .mb-3.form-check
+                  input#Remember.form-check-input(type='checkbox', name='remember')
+                  label.form-check-label(for='Remember') Remember login
+                button.btn.btn-primary.w-100(type='submit') Submit
+    script(src='css/js/bootstrap.bundle.js')
+    script(src='./login.js')
+    script(src='https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js', integrity='sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r', crossorigin='anonymous')
+    script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js', integrity='sha384-7qAoOXltbVP82dhxHAUje59V5r2YsVfBafyUDxEdApLPmcdhBPg1DKg1ERo0BZlK', crossorigin='anonymous')

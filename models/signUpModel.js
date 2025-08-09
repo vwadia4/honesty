@@ -19,7 +19,8 @@ const signupSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        require: true
+        enum: ['farmer', 'sales-rep', 'brood-manager'],
+        default: 'farmer'
     },
     email: {
         type: String,
@@ -29,7 +30,7 @@ const signupSchema = new mongoose.Schema({
     password: {
         type: String,
         require: true,
-        
+
     },
     nin: {
         type: String,
@@ -38,6 +39,6 @@ const signupSchema = new mongoose.Schema({
     }
 });
 signupSchema.plugin(passportLocalMongoose, {
-usernameField: 'email'
+    usernameField: 'email'
 })
 module.exports = mongoose.model("signUpModel", signupSchema);

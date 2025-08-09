@@ -18,4 +18,16 @@ router.post('/salesRep', async (req, res) => {
         res.status(400).send('Failed to register farmers.')
     }
 });
+
+// Show update form
+router.get('/edit/:id', async (req, res) => {
+  const salesRep = await SalesRep.findById(req.params.id);
+  res.render('editFarmer', { salesRep });
+});
+
+// Handle update
+router.post('/edit/:id', async (req, res) => {
+  await SalesRep.findByIdAndUpdate(req.params.id, req.body);
+  res.redirect('/salesRep/Dashboard');
+});
 module.exports = router;

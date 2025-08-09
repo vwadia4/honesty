@@ -6,8 +6,7 @@ const chickPaymentSchema = new mongoose.Schema({
     required: true
   },
   farmer: {
-    type: String,
-    required: true
+    type: { type: mongoose.Schema.Types.ObjectId, ref: 'Farmer' },
   },
   amount: {
     type: Number,

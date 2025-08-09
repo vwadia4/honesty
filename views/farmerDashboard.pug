@@ -1,0 +1,70 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    title Farmer Dashboard - Young for Chick
+    link(href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet")
+    style.
+      .action-btn { margin-right: 5px; }
+      table th, table td { vertical-align: middle !important; }
+  body.container.mt-4
+    h2.mb-4 🐣 Farmer Dashboard
+
+    // Navigation Buttons
+    .mb-4
+      a.btn.btn-primary(href="/farmer-registration") Register Farmer
+      a.btn.btn-success(href="/feed-request") Feed Request
+      a.btn.btn-warning(href="/chick-payment") Chick Payment
+      a.btn.btn-info(href="/feed-payment") Feed Payment
+
+    // Chick Requests Table
+    h4 Chick Requests
+    table.table.table-bordered
+      thead.table-light
+        tr
+          th Farmer
+          th Type
+          th Quantity
+          th Unit Price
+          th Total
+          th Status
+          th Actions
+      tbody
+        each request in chickRequests
+          tr
+            td= request.farmer
+            td= request.type
+            td= request.quantity
+            td= request.unitPrice.toLocaleString()
+            td= (request.quantity * request.unitPrice).toLocaleString()
+            td.text-capitalize= request.status
+            td
+              a.btn.btn-sm.btn-outline-primary.action-btn(href=`/farmers/chicks/edit/${request._id}`) Update
+              a.btn.btn-sm.btn-outline-danger.action-btn(href=`/farmers/chicks/delete/${request._id}`) Delete
+              a.btn.btn-sm.btn-outline-success.action-btn(href=`/chick-payment/${request._id}`) Pay
+
+    // Feed Requests Table
+    h4.mt-5 Feed Requests
+    table.table.table-bordered
+      thead.table-light
+        tr
+          th Farmer
+          th Feed Type
+          th Quantity
+          th Unit Price
+          th Total
+          th Status
+          th Actions
+      tbody
+        each request in feedRequests
+          tr
+            td= request.farmer
+            td= request.type
+            td= request.quantity
+            td= request.unitPrice.toLocaleString()
+            td= (request.quantity * request.unitPrice).toLocaleString()
+            td.text-capitalize= request.status
+            td
+              a.btn.btn-sm.btn-outline-primary.action-btn(href=`/farmers/feeds/edit/${request._id}`) Update
+              a.btn.btn-sm.btn-outline-danger.action-btn(href=`/farmers/feeds/delete/${request._id}`) Delete
+              a.btn.btn-sm.btn-outline-success.action-btn(href=`/feed-payment/${request._id}`) Pay

@@ -18,29 +18,28 @@ const salesRep = require('./routes/salesRepRouter');
 const feeds = require('./routes/feedsRoute');
 const request = require('./routes/requestsRoute');
 const signUp = require('./routes/authRoutes');
-const exportRoutes = require('./routes/exportRoutes');
+const exportRoutes = require('./routes/exportRoutes'); //testing
 const dashboardRoute = require('./routes/dashboardRoute');
+const salesRepRoutes = require('./routes/salesRepRouter');
+const authRoutes = require('./routes/authRoutes');
 
+//Import user model(for the logins)
 const User = require('./models/signUpModel');
+
 // 2. INSTANTIATIONS
 const app = express();
 const port = 3004;
 //Young for chicks configuration settings
 app.locals.moment = moment;
-mongoose.connect(process.env.DATABASE);
-mongoose.connection
-  .once("open", () => {
-    console.log(`Secure Connection has been established for Mongoose`);
-  })
-  .on("error", () => {
-    console.error(error.message);
-  });
+mongoose.connect(process.env.DATABASE)
 
 // 3. CONFIGURATION
+app.use(express.static(path.join(__dirname, 'public'))); //testing
 app.set('view engine', 'pug'); //setting Pug as the view engine
 app.set('views', path.join(__dirname, 'views')); // specify a folder containing frontend files
 
 // 4. MIDDLEWARE
+//app.use(methodOverride('_method')) //testing
 app.use(express.urlencoded({ extended: false })); //picks data from the form
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -72,13 +71,20 @@ app.use('/', request);
 app.use('/', signUp);
 app.use('/', exportRoutes);
 app.use('/', dashboardRoute);
+app.use('/sales-rep', salesRepRoutes);
+app.use('/', authRoutes);
+
+
+app.use('/', require('./routes/dashboardRoute'));
+app.use('/export', require('./routes/exportRoutes'));
+
 
 //HANDLE NON-EXISTING ROUTES
 app.use((req, res) => {
-    res.status(404).send('Sorry! Route not found');
+  res.status(404).send('Sorry! Route not found');
 });
 
 // 6. BOOTSTRAPPING SERVER(Start the server)
 app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
+  console.log(`Listening on port ${port}`);
 });

@@ -19,4 +19,13 @@ router.post('/request', async (req, res) => {
   }
 });
 
+// Approve a request
+router.post('/requests/:id/approve', async (req, res) => {
+  try {
+    await Request.findByIdAndUpdate(req.params.id, { status: 'approved' });
+    res.redirect('/dashboard');
+  } catch (error) {
+    res.status(500).send('Failed to approve request');
+  }
+});
 module.exports = router;

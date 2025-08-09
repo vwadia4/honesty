@@ -20,4 +20,16 @@ router.post('/farmerReg', async(req, res) => {
     }
 });
 
+// Show update form
+router.get('/edit/:id', async (req, res) => {
+  const farmer = await Farmer.findById(req.params.id);
+  res.render('editFarmer', { farmer });
+});
+
+// Handle update
+router.post('/edit/:id', async (req, res) => {
+  await Farmer.findByIdAndUpdate(req.params.id, req.body);
+  res.redirect('/farmers/dashboard');
+});
+
 module.exports = router;

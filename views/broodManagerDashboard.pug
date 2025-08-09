@@ -1,0 +1,213 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Brood Manager - Dashboard
+    link(rel="stylesheet", href="/css/custom.css")
+    link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css")
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css")
+
+  body
+    .container-fluid.mt-4
+      .row.mb-4.text-center
+        // Total Chicks
+        .col-md-3
+          .card.border-success.shadow-sm
+            .card-header.bg-success.text-white
+              h5 Total Chicks
+            .card-body
+              a.btn.btn-success.mb-2(href="/export/chicks")
+                i.fa.fa-file-csv
+                |  Export Chicks (CSV)
+              h3 1,250
+
+        // Total Farmers
+        .col-md-3
+          .card.border-primary.shadow-sm
+            .card-header.bg-primary.text-white
+              h5 Total Farmers
+            .card-body
+              a.btn.btn-success.mb-2(href="/export/farmers")
+                i.fa.fa-file-csv
+                |  Export Farmers (CSV)
+              h3 48
+
+        // Total Requests
+        .col-md-3
+          .card.border-warning.shadow-sm
+            .card-header.bg-warning.text-dark
+              h5 Total Requests
+            .card-body
+              a.btn.btn-success.mb-2(href="/export/requests")
+                i.fa.fa-file-csv
+                |  Export Requests (CSV)
+              h3 25
+
+        // Total Feeds
+        .col-md-3
+          .card.border-info.shadow-sm
+            .card-header.bg-info.text-white
+              h5 Total Feeds
+            .card-body
+              a.btn.btn-success.mb-2(href="/export/feeds")
+                i.fa.fa-file-csv
+                |  Export Feeds (CSV)
+              h3 50
+
+    // Pending Chick Requests
+    .row.mb-4
+      .col-12
+        .card.border-info
+          .card-header.bg-info.text-white
+            h4 Pending Chick Requests
+          .card-body
+            table.table.table-hover
+              thead.table-light
+                tr
+                  th Date
+                  th Total Chicks
+                  th Farmer
+                  th Sales Rep
+                  th Amount (UGX)
+                  th Actions
+              tbody
+                tr
+                  td 2025-08-01
+                  td 100
+                  td Anne Sizomu
+                  td Victor Wadia
+                  td 300,000
+                  td
+                    a.btn.btn-sm.btn-success.me-1(href="/requests/123/approve")
+                      i.fa.fa-check
+                      |  Approve
+                    a.btn.btn-sm.btn-warning.me-1(href="/requests/123/dispatch")
+                      i.fa.fa-truck
+                      |  Dispatch
+                    a.btn.btn-sm.btn-danger.me-1(href="/requests/123/reject")
+                      i.fa.fa-times
+                      |  Reject
+                    a.btn.btn-outline-secondary(href="/export/requests")
+                      i.fa.fa-file-csv
+                      |  Export Payments (CSV)
+
+    // Pending Feed Requests
+    .row.mb-4
+      .col-12
+        .card.border-secondary
+          .card-header.bg-secondary.text-white
+            h4 Pending Feed Requests
+          .card-body
+            table.table.table-hover
+              thead.table-light
+                tr
+                  th Date
+                  th Amount Feeds
+                  th Farmer
+                  th Amount (UGX)
+                  th Status
+                  th Actions
+              tbody
+                tr
+                  td 2025-08-02
+                  td 15
+                  td John Doe
+                  td 450,000
+                  td Pending
+                  td
+                    a.btn.btn-sm.btn-success.me-1(href="/feeds/201/approve")
+                      i.fa.fa-check
+                      |  Approve
+                    a.btn.btn-sm.btn-warning.me-1(href="/feeds/201/dispatch")
+                      i.fa.fa-truck
+                      |  Dispatch
+                    a.btn.btn-sm.btn-danger.me-1(href="/feeds/201/reject")
+                      i.fa.fa-times
+                      |  Reject
+                    a.btn.btn-outline-secondary(href="/export/feeds")
+                      i.fa.fa-file-csv
+                      |  Export Feeds (CSV)
+
+    // Pending Chick Payments
+    .row.mb-4
+      .col-12
+        .card.border-warning
+          .card-header.bg-warning.text-dark
+            h4 Pending Chick Payments
+          .card-body
+            table.table.table-hover
+              thead.table-light
+                tr
+                  th Due Date
+                  th Farmer
+                  th Amount (UGX)
+                  th Actions
+              tbody
+                tr
+                  td 2025-08-10
+                  td George A Jogo
+                  td 150,000
+                  td
+                    a.btn.btn-sm.btn-primary.me-1(href="/payments/101/edit")
+                      i.fa.fa-edit
+                      |  Update
+                    form.d-inline(method="POST", action="/payments/101?_method=DELETE")
+                      button.btn.btn-sm.btn-danger(type="submit")
+                        i.fa.fa-trash
+                        |  Delete
+                    a.btn.btn-outline-success(href="/export/payments")
+                      i.fa.fa-file-csv
+                      |  Export Payments (CSV)
+    
+    // Sales and Revenue Reports
+    .row.mb-4
+      .col-12.text-center
+        a.btn.btn-outline-primary.me-2(href="/reports/sales")
+          i.fa.fa-chart-line
+          |  View Sales Report
+        a.btn.btn-outline-success.me-2(href="/reports/revenue")
+          i.fa.fa-coins
+          |  View Revenue Report
+
+  h2 Feed Orders
+  table
+    thead
+      tr
+        th Farmer
+        th Quantity
+        th Date
+        th Status
+        th Actions
+    tbody
+      each feed in feeds
+        tr
+          td= feed.farmerName
+          td= feed.quantity
+          td= feed.date
+          td= feed.status
+          td
+            a.btn.btn-warning(href=`/broodmanager/feeds/edit/${feed._id}`) Update
+            a.btn.btn-danger(href=`/broodmanager/feeds/delete/${feed._id}`) Delete
+
+  h2 Chick Orders
+  table
+    thead
+      tr
+        th Farmer
+        th Quantity
+        th Date
+        th Status
+        th Actions
+    tbody
+      each chick in chicks
+        tr
+          td= chick.farmerName
+          td= chick.quantity
+          td= chick.date
+          td= chick.status
+          td
+            a.btn.btn-warning(href=`/broodmanager/chicks/edit/${chick._id}`) Update
+            a.btn.btn-danger(href=`/broodmanager/chicks/delete/${chick._id}`) Delete
+
+    script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js")

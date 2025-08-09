@@ -1,0 +1,103 @@
+extends layout
+
+block content
+  h1 Sales Representative Dashboard
+.container.mt-4
+  h1.text-center.mb-4 Sales Representative Dashboard
+  // Tabs Navigation
+  ul#salesRepTabs.nav.nav-tabs(role='tablist')
+    li.nav-item
+      a#farmers-tab.nav-link.active(data-bs-toggle='tab' href='#farmers' role='tab') Farmers
+    li.nav-item
+      a#chicks-tab.nav-link(data-bs-toggle='tab' href='#chicks' role='tab') Chicks Orders
+    li.nav-item
+      a#feeds-tab.nav-link(data-bs-toggle='tab' href='#feeds' role='tab') Feeds Orders
+    li.nav-item
+      a#status-tab.nav-link(data-bs-toggle='tab' href='#status' role='tab') Status
+  // Tabs Content
+  .tab-content.mt-3
+    // Farmers Tab
+    #farmers.tab-pane.fade.show.active(role='tabpanel')
+      iframe(src='/farmerRegistration.html' style='width: 100%; height: 600px; border: none;')
+    // Chicks Orders Tab
+    #chicks.tab-pane.fade(role='tabpanel')
+      iframe(src='/chicksRequestForm.html' style='width: 100%; height: 600px; border: none;')
+    // Feeds Orders Tab
+    #feeds.tab-pane.fade(role='tabpanel')
+      iframe(src='/feedsRequestForm.html' style='width: 100%; height: 600px; border: none;')
+    // Status Tab
+    #status.tab-pane.fade(role='tabpanel')
+      h4 Feeds &amp; Chicks Order Status
+      table.table.table-bordered
+        thead
+          tr
+            th Order ID
+            th Type
+            th Farmer
+            th Quantity
+            th Status
+            th Requested On
+        tbody#statusTable
+          // Filled dynamically from MongoDB
+script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js')
+script.
+  fetch('/sales-rep/status-data')
+  .then(res => res.json())
+  .then(data => {
+  const table = document.getElementById('statusTable');
+  table.innerHTML = '';
+  data.forEach(order => {
+  table.innerHTML += `
+  <tr>
+  <td>${order._id}</td>
+  <td>${order.type}</td>
+  <td>${order.farmerName}</td>
+  <td>${order.quantity}</td>
+  <td>${order.status}</td>
+  <td>${new Date(order.createdAt).toLocaleDateString()}</td>
+  </tr>
+  `;
+
+
+  h2 Farmers You Registered
+  table
+    thead
+      tr
+        th Name
+        th Gender
+        th Email
+        th NIN
+        th DOB
+        th Actions
+    tbody
+      each farmer in farmers
+        tr
+          td= farmer.name
+          td= farmer.gender
+          td= farmer.email
+          td= farmer.nin
+          td= farmer.dob
+          td
+            a.btn.btn-warning(href=`/salesrep/farmers/edit/${farmer._id}`) Update
+            a.btn.btn-danger(href=`/salesrep/farmers/delete/${farmer._id}`) Delete
+
+  h2 Orders You Placed
+  table
+    thead
+      tr
+        th Order Type
+        th Quantity
+        th Date
+        th Actions
+    tbody
+      each order in orders
+        tr
+          td= order.type
+          td= order.quantity
+          td= order.date
+          td
+            a.btn.btn-warning(href=`/salesrep/orders/edit/${order._id}`) Update
+            a.btn.btn-danger(href=`/salesrep/orders/delete/${order._id}`) Delete
+
+    });
+  });

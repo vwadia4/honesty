@@ -1,0 +1,35 @@
+extends layout
+
+block content
+  h2 Edit Farmer Details
+  form(action=`/farmers/edit/${farmer._id}` method="POST")
+    div
+      label(for="name") Name:
+      input(type="text" name="name" id="name" value=farmer.name required)
+    div
+      label(for="gender") Gender:
+      select(name="gender" id="gender" required)
+        option(value="Male" selected=farmer.gender==="Male") Male
+        option(value="Female" selected=farmer.gender==="Female") Female
+    div
+      label(for="email") Email:
+      input(type="email" name="email" id="email" value=farmer.email required)
+    div
+      label(for="nin") National ID (NIN):
+      input(type="text" name="nin" id="nin" value=farmer.nin required)
+    div
+      label(for="dob") Date of Birth:
+      input(type="date" name="dob" id="dob" value=farmer.dob)
+    div
+      label(for="recommenderName") Recommender Name:
+      input(type="text" name="recommenderName" id="recommenderName" value=farmer.recommenderName)
+    div
+      label(for="recommenderNin") Recommender NIN:
+      input(type="text" name="recommenderNin" id="recommenderNin" value=farmer.recommenderNin)
+    div
+      label(for="phone") Phone:
+      input(type="text" name="phone" id="phone" value=farmer.phone)
+    div
+      label(for="comment") Comment:
+      textarea(name="comment" id="comment")= farmer.comment
+    button(type="submit") Save Changes

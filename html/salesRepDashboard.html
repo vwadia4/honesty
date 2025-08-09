@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sales Representative Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Sales Representative Dashboard</h1>
+
+    <!-- Tabs Navigation -->
+    <ul class="nav nav-tabs" id="salesRepTabs" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="farmers-tab" data-bs-toggle="tab" href="#farmers" role="tab">Farmers</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="chicks-tab" data-bs-toggle="tab" href="#chicks" role="tab">Chicks Orders</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="feeds-tab" data-bs-toggle="tab" href="#feeds" role="tab">Feeds Orders</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="status-tab" data-bs-toggle="tab" href="#status" role="tab">Status</a>
+        </li>
+    </ul>
+
+    <!-- Tabs Content -->
+    <div class="tab-content mt-3">
+
+        <!-- Farmers Tab -->
+        <div class="tab-pane fade show active" id="farmers" role="tabpanel">
+            <iframe src="/farmerRegistration.html" style="width: 100%; height: 600px; border: none;"></iframe>
+        </div>
+
+        <!-- Chicks Orders Tab -->
+        <div class="tab-pane fade" id="chicks" role="tabpanel">
+            <iframe src="/requests.html" style="width: 100%; height: 600px; border: none;"></iframe>
+        </div>
+
+        <!-- Feeds Orders Tab -->
+        <div class="tab-pane fade" id="feeds" role="tabpanel">
+            <iframe src="/feeds.html" style="width: 100%; height: 600px; border: none;"></iframe>
+        </div>
+
+        <!-- Status Tab -->
+        <div class="tab-pane fade" id="status" role="tabpanel">
+            <h4>Feeds & Chicks Order Status</h4>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Type</th>
+                        <th>Farmer</th>
+                        <th>Quantity</th>
+                        <th>Status</th>
+                        <th>Requested On</th>
+                    </tr>
+                </thead>
+                <tbody id="statusTable">
+                    <!-- Filled dynamically from MongoDB -->
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+fetch('/sales-rep/status-data')
+    .then(res => res.json())
+    .then(data => {
+        const table = document.getElementById('statusTable');
+        table.innerHTML = '';
+        data.forEach(order => {
+            table.innerHTML += `
+                <tr>
+                    <td>${order._id}</td>
+                    <td>${order.type}</td>
+                    <td>${order.farmerName}</td>
+                    <td>${order.quantity}</td>
+                    <td>${order.status}</td>
+                    <td>${new Date(order.createdAt).toLocaleDateString()}</td>
+                </tr>
+            `;
+        });
+    });
+</script>
+</body>
+</html>
