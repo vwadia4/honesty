@@ -7,53 +7,55 @@ html(lang='en')
     link(rel='stylesheet', href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css')
     style.
       body {
-      font-family: Arial, sans-serif;
-      max-width: 400px;
-      margin: auto;
-      padding: 20px;
-      background-color: #f1f1f1;
-      background: url(/public/images/ga-con1.jpg)
+        font-family: Arial, sans-serif;
+        max-width: 400px;
+        margin: auto;
+        padding: 20px;
+        background-color: #f1f1f1;
+        background: url(/images/ga-con1.jpg);
       }
       input, button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
       }
   body
-    // Farmer details
-    .container.py-5
-      h4 Welcome To SignUp Page
-      form#SignUp(method='POST' action='signUp')
-        .mb-3
-          label(for='farmerName') Farmer Name
-          input#farmerName.form-control(type='text', placeholder='Farmer name')
-        .mb-3
-          label(for='farmerGender') Gender
-          select#gender.form-select name='gender'
-            option(value='') Select
-            option(value='Male') Male
-            option(value='Female') Female
-        .mb-3
-          label(for='farmerDob') Date of Birth
-          input#Dob.form-control(type='date' name='Dob')
-        .mb-3
-          label(for='contact number') Contact
-          input#contact.form-control(type='text', name='contact', placeholder='contact number')
-        .mb-3
-          label(for='email')
-          | Email Adress
-          input#email.form-control(type='text', name='email', placeholder='email address')
-        .mb-3
-          label(for='password')
-          | Password
-          input#password.form-control(type='text', name='password', placeholder='Type password')
-        .mb-3
-          label(for='farmerNin') National ID Number
-          input#farmerNin.form-control(type='text' name='nin' placeholder='Type NIN number')
-        .mb-3
-          button.btn.btn-primary(type='summit', onclick='addFarmer()') Summit Farmer
-          button#deleteFarmerBtn.btn.btn-danger Delete
-          button#editFarmerBtn.btn.btn-secondary Update
-        div
-          p Already have an account?
-          button(for='login') login
+    .signup-box
+      form(action="/farmers-reg" method='post') 
+        h2 Create Account
+        input(type="text" id="name" name="fullName" placeholder="Full Name" required)
+        input(type="tel" id="phone" name="phoneNumber" placeholder="tel +256" required)
+        input(type="number" id="age" name="age" placeholder="Age 18 & 30" min="10" required)
+        input(type="text" id="farmerNin" name="farmerNin" placeholder="NIN (National Id Number)" required)
+        input(type="email" id="email" name="email" placeholder="email example@gmail.com" required)
+        input(type="password" id="password" name="password" placeholder="Password 1234" required)
+        input(type="text" id="address" name="address" placeholder="Address (District, Sub-County, Parish)" required)
+        input(type="text" id="username" name="username" placeholder="Username" minlength="4")
+        input#farmerDob.form-control(type="date", name="farmerDob", required)
+
+        // Gender field
+        select(id="gender" name="gender" required)
+          option(value="") Select Gender
+          option(value="Male") Male
+          option(value="Female") Female
+          option(value="Other") Other
+
+        // Recommender fields
+        input(type="text" id="recommenderName" name="recommenderName" placeholder="Recommender Name" required)
+        input(type="text" id="recommenderNin" name="recommenderNin" placeholder="Recommender NIN" required)
+
+        // Role field
+        select(id="role" name="role" required)
+          option(value="") Select Role
+          option(value="BrooderManager") Brooder Manager
+          option(value="SalesRep") Sales Rep
+          option(value="YoungFarmer") Young Farmer
+
+        button(type='submit') Sign Up
+        #signup-msg.msg
+
+      .link-login
+        | Already have an account? 
+        a(href="../login") Login here
+
+    script(src="../js/signup.js")

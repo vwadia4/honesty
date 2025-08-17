@@ -1,12 +1,14 @@
 const mongoose = require('mongoose');
 
-const salesRepresentativeSchema = new mongoose.Schema({
-  salesRep:{ 
-    type: String,
+const salesRepSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
     required: true
-},
-  repGender: { 
+  },
+  repGender: {
     type: String,
+    enum: ['Male', 'Female', 'Other'],
     required: true
   },
   repDob: {
@@ -14,8 +16,8 @@ const salesRepresentativeSchema = new mongoose.Schema({
     required: true
   },
   repContact: {
-  type: String,
-  required: true
+    type: String,
+    required: true
   },
   repEmail: {
     type: String,
@@ -24,7 +26,8 @@ const salesRepresentativeSchema = new mongoose.Schema({
   },
   repNin: {
     type: String,
-    required: true
+    required: true,
+    trim: true
   },
   district: {
     type: String,
@@ -47,8 +50,8 @@ const salesRepresentativeSchema = new mongoose.Schema({
     required: true
   },
   comment: {
-    type: String,
-    required: true
+    type: String
   }
-});
-module.exports = mongoose.model('salesRepresentative', salesRepresentativeSchema);
+}, { timestamps: true });
+
+module.exports = mongoose.model('SalesRep', salesRepSchema);

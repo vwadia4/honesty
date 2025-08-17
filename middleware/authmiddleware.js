@@ -1,27 +1,35 @@
-// Ensure user is authenticated
-exports.ensureAuthenticated = function (req, res, next) {
-    if (req.session && req.session.user) {
-        return next();
-    }
-    res.redirect("/login");
-};
-
-// Ensure user is a farmer
-exports.ensureFarmer = function (req, res, next) {
-    if (req.session.user && req.session.user.role === 'Farmer') {
-        return next();
-    }
-    res.redirect("/login");
-};
-
-function ensureAuthenticated(req, res, next) {  //testing
-  if (req.isAuthenticated()) return next();
+// Ensure the user is logged in
+function ensureAuthenticated(req, res, next) {
+  if (req.session && req.session.user) {
+    return next();
+  }
   res.redirect('/login');
 }
 
-function isBroodManager(req, res, next) {
-  if (req.user && req.user.role === 'brood-manager') return next();
-  res.status(403).send('Access Denied');
+// Ensure the user is a Farmer
+function ensureFarmer(req, res, next) {
+  if (req.session && req.session.user && req.session.user.role === 'YoungFarmer') {
+    return next();
+  }
+  res.status(403).send('Access denied. You must be a farmer.');
 }
 
-module.exports = { ensureAuthenticated, isBroodManager };
+// Ensure the user is a Brood Manager
+function ensureBroodManager(req, res, next) {
+  if (req.session && req.session.user && req.session.user.role === 'broodManager') {
+    return next();
+  }
+  res.status(403).send('Access denied. You must be a brood manager.');
+}
+
+// Ensure the user is a Sales Representative
+function ensureSalesRep(req, res, next) {
+  if (req.session && req.session.user && req.session.user.role === 'SalesRep') {
+    return next();
+  }
+  res.status(403).send('Access denied. You must be a sales representative.');
+}
+
+module.exports = { ensureAuthenticated, ensureFarmer, ensureBroodManager, ensureSalesRep };
+
+

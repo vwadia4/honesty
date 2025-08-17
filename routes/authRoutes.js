@@ -1,59 +1,46 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 
-const passport = require("passport");
-const signUpModel = require("..//models/signUpModel");
-
-router.get("/signup", (req, res) => {
-  res.render("signUp");
+// Login Route
+router.get('/login', (req, res) => {
+    res.render('login');
 });
-router.post("/signup", async (req, res) => {
-  try {
-    const user = new signUpModel(req.body);
-    let existingUser = await signUpModel.findOne({ email: req.body.email });
-    if (existingUser) {
-      return res.status(400).send("Email already Exists.");
-    } else {
-      await signUpModel.register(user, req.body.password, (err) => {  //create the hash & salt in DB
-        if (err) {
-          throw err;
-        }
-        res.redirect("/login");
-      });
-    }
-  } catch (error) {
-    res.status(400).send("Sorry You were unable to signup");
-  }
-});
-
-//Login Route
-router.get("/login", (req, res) => {
-  res.render("login");
-});
-
-router.post("/login", passport.authenticate("local", { failureRedirect: "/login" }),
-  (req, res) => {
+router.post('/login', passport.authenticate('local', {
+    failureRedirect: '/login',
+    failureFlash: 'Invalid email or password'
+}), (req, res) => {
     req.session.user = req.user;
-    if (req.user.role == 'Farmer') {
-      res.send("This is the farmers dash board")
-    } else if (req.user.role == 'Agent') {
-      res.send("This is the Sale agent dash board")
-    } else if (req.user.role == 'Broodermanager') {
-      res.send("This is the Brooder Manager dash board")
+    const role = req.user.role;
+    if (role === 'YoungFarmer') {
+        res.redirect('/farmer-dashboard');
+    } else if (role === 'SalesRep') {
+        res.redirect('/sales-dashboard');
+    } else if (role === 'manager-dasboard') {
+        res.redirect('/broodmanager/dashboard');
     } else {
-      res.send('You do not have a role in the System')
+        req.flash('error', 'Invalid role');
+        res.redirect('/login');
     }
-  });
+});
 
-//logout button
-router.get('/logout', (req, res) => {
-  if (req.session) {
-    req.session.destroy((error) => {
-      if (error) {
-        return res.status(500).send('error logging out')
-      }
-    })
-  }
-})
+// Logout Route
+router.get('/logout', (req, res, next) => {
+    req.logout((err) => {
+        if (err) {
+            console.error(err);
+            req.flash('error', 'Error logging out');
+            return res.redirect('/');
+        }
+        req.session.destroy((err) => {
+            if (err) {
+                console.error(err);
+                req.flash('error', 'Error logging out');
+                return res.redirect('/');
+            }
+            res.redirect('/login');
+        });
+    });
+});
 
 module.exports = router;

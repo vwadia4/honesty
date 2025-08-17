@@ -1,70 +1,470 @@
+
 doctype html
-html(lang="en")
+html(lang='en')
   head
-    meta(charset="UTF-8")
-    title Farmer Dashboard - Young for Chick
-    link(href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet")
-    style.
-      .action-btn { margin-right: 5px; }
-      table th, table td { vertical-align: middle !important; }
-  body.container.mt-4
-    h2.mb-4 🐣 Farmer Dashboard
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title Young4ChickS - Farmer Dashboard
+    link(rel='stylesheet', href='/css/farmerdash.css')
+    link(href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css', rel='stylesheet')
+    
+  body
+    .dashboard-container
+      // Header Section
+      header.dashboard-header
+        .header-content
+          .logo-section
+            a(href='/farmer-dashboard')
+              i.fas.fa-feather-alt.logo-icon
+              h1.logo-text Young4ChickS
+              span.tagline Empowering Youth Farmers
+          
+          .user-info
+            .user-avatar
+              i.fas.fa-user
+            .user-details
+              h3#farmer-name John Mukasa
+              p.user-type Returning Farmer
+              small.last-request Last request: 2 months ago
+        
+        .header-stats
+          .stat-card
+            .stat-icon
+              i.fas.fa-egg
+            .stat-content
+              h4 Total Chicks Received
+              span.stat-number 350
+          
+          .stat-card
+            .stat-icon
+              i.fas.fa-calendar-check
+            .stat-content
+              h4 Next Request Available
+              span.stat-number 2 months
+          
+          .stat-card
+            .stat-icon
+              i.fas.fa-sack-dollar
+            .stat-content
+              h4 Feed Bags Pending
+              span.stat-number 4 bags
 
-    // Navigation Buttons
-    .mb-4
-      a.btn.btn-primary(href="/farmer-registration") Register Farmer
-      a.btn.btn-success(href="/feed-request") Feed Request
-      a.btn.btn-warning(href="/chick-payment") Chick Payment
-      a.btn.btn-info(href="/feed-payment") Feed Payment
+      // Main Dashboard Content
+      main.dashboard-main
+        .dashboard-grid
+          
+          // Request Status Section
+          .dashboard-section.request-status
+            .section-header
+              h2
+                i.fas.fa-clipboard-list
+                | Request Status
+              button.btn.btn-primary.new-request-btn(href='/request')
+                i.fas.fa-plus
+                | New Request
+            
+            .request-cards
+              .request-card.pending
+                .card-header
+                  .status-badge.status-pending
+                    i.fas.fa-clock
+                    | Pending
+                  .request-date 15 Aug 2025
+                .card-body
+                  .request-details
+                    p
+                      strong Request ID: 
+                      span #YFC-2025-089
+                    p
+                      strong Chicks Requested: 
+                      span 200 (Mixed: 100 Layers, 100 Broilers)
+                    p
+                      strong Type: 
+                      span Local & Exotic
+                    p
+                      strong Feed Bags: 
+                      span 2 bags included
+                  .card-actions
+                    a.btn.btn-secondary.btn-sm(href='/requests/YFC-2025-089')
+                      i.fas.fa-eye
+                      | View Details
+              
+              .request-card.dispatched
+                .card-header
+                  .status-badge.status-dispatched
+                    i.fas.fa-check-circle
+                    | Dispatched
+                  .request-date 10 Jun 2025
+                .card-body
+                  .request-details
+                    p
+                      strong Request ID: 
+                      span #YFC-2025-067
+                    p
+                      strong Chicks Received: 
+                      span 150 (All Layers)
+                    p
+                      strong Collection Date: 
+                      span 12 Jun 2025
+                    p
+                      strong Feed Status: 
+                      span 2 bags collected
+                  .card-actions
+                    a.btn.btn-success.btn-sm(href='/receipts/YFC-2025-067', download)
+                      i.fas.fa-download
+                      | Download Receipt
+              
+              .request-card.cancelled
+                .card-header
+                  .status-badge.status-cancelled
+                    i.fas.fa-times-circle
+                    | Cancelled
+                  .request-date 20 May 2025
+                .card-body
+                  .request-details
+                    p
+                      strong Request ID: 
+                      span #YFC-2025-045
+                    p
+                      strong Reason: 
+                      span Insufficient stock
+                    p
+                      strong Chicks Requested: 
+                      span 300 (All Broilers)
+                    p
+                      strong Refund Status: 
+                      span Not applicable
+                  .card-actions
+                    a.btn.btn-outline.btn-sm(href='/requests/resubmit/YFC-2025-045')
+                      i.fas.fa-redo
+                      | Resubmit Request
 
-    // Chick Requests Table
-    h4 Chick Requests
-    table.table.table-bordered
-      thead.table-light
-        tr
-          th Farmer
-          th Type
-          th Quantity
-          th Unit Price
-          th Total
-          th Status
-          th Actions
-      tbody
-        each request in chickRequests
-          tr
-            td= request.farmer
-            td= request.type
-            td= request.quantity
-            td= request.unitPrice.toLocaleString()
-            td= (request.quantity * request.unitPrice).toLocaleString()
-            td.text-capitalize= request.status
-            td
-              a.btn.btn-sm.btn-outline-primary.action-btn(href=`/farmers/chicks/edit/${request._id}`) Update
-              a.btn.btn-sm.btn-outline-danger.action-btn(href=`/farmers/chicks/delete/${request._id}`) Delete
-              a.btn.btn-sm.btn-outline-success.action-btn(href=`/chick-payment/${request._id}`) Pay
+          // Quick Actions Section
+          .dashboard-section.quick-actions
+            .section-header
+              h2
+                i.fas.fa-bolt
+                | Quick Actions
+            
+            .action-grid
+              a.action-card(href='/request')
+                .action-icon
+                  i.fas.fa-plus-circle
+                .action-content
+                  h4 New Request
+                  p Submit a new chick request
+              
+              a.action-card(href='/requests/history')
+                .action-icon
+                  i.fas.fa-history
+                .action-content
+                  h4 Request History
+                  p View all past requests
+              
+              a.action-card(href='/feed/status')
+                .action-icon
+                  i.fas.fa-seedling
+                .action-content
+                  h4 Feed Status
+                  p Check feed bag deliveries
+              
+              a.action-card(href='/support')
+                .action-icon
+                  i.fas.fa-headset
+                .action-content
+                  h4 Contact Support
+                  p Get help from sales reps
 
-    // Feed Requests Table
-    h4.mt-5 Feed Requests
-    table.table.table-bordered
-      thead.table-light
-        tr
-          th Farmer
-          th Feed Type
-          th Quantity
-          th Unit Price
-          th Total
-          th Status
-          th Actions
-      tbody
-        each request in feedRequests
-          tr
-            td= request.farmer
-            td= request.type
-            td= request.quantity
-            td= request.unitPrice.toLocaleString()
-            td= (request.quantity * request.unitPrice).toLocaleString()
-            td.text-capitalize= request.status
-            td
-              a.btn.btn-sm.btn-outline-primary.action-btn(href=`/farmers/feeds/edit/${request._id}`) Update
-              a.btn.btn-sm.btn-outline-danger.action-btn(href=`/farmers/feeds/delete/${request._id}`) Delete
-              a.btn.btn-sm.btn-outline-success.action-btn(href=`/feed-payment/${request._id}`) Pay
+          // Farm Progress Section
+          .dashboard-section.farm-progress
+            .section-header
+              h2
+                i.fas.fa-chart-line
+                | Your Farm Progress
+            
+            .progress-content
+              .progress-stats
+                .progress-item
+                  .progress-icon
+                    i.fas.fa-egg
+                  .progress-info
+                    h4 Total Chicks Raised
+                    .progress-number 350
+                    .progress-bar
+                      .progress-fill(style='width: 70%')
+                
+                .progress-item
+                  .progress-icon
+                    i.fas.fa-calendar
+                  .progress-info
+                    h4 Months as Farmer
+                    .progress-number 8
+                    .progress-bar
+                      .progress-fill(style='width: 40%')
+                
+                .progress-item
+                  .progress-icon
+                    i.fas.fa-trophy
+                  .progress-info
+                    h4 Success Rate
+                    .progress-number 85%
+                    .progress-bar
+                      .progress-fill(style='width: 85%')
+
+          // Notifications Section
+          .dashboard-section.notifications
+            .section-header
+              h2
+                i.fas.fa-bell
+                | Recent Notifications
+              .notification-count 3
+            
+            .notification-list
+              .notification-item.unread
+                .notification-icon
+                  i.fas.fa-check-circle
+                .notification-content
+                  h4 Request Approved!
+                  p Your request #YFC-2025-089 has been approved. Ready for collection.
+                  small.notification-time 2 hours ago
+              
+              .notification-item
+                .notification-icon
+                  i.fas.fa-truck
+                .notification-content
+                  h4 Feed Delivery Scheduled
+                  p Your 2 feed bags will be delivered tomorrow.
+                  small.notification-time 1 day ago
+              
+              .notification-item
+                .notification-icon
+                  i.fas.fa-info-circle
+                .notification-content
+                  h4 Program Update
+                  p New exotic breed varieties now available for request.
+                  small.notification-time 3 days ago
+
+      // Footer
+      footer.dashboard-footer
+        .footer-content
+          .footer-section
+            h4 Contact Information
+            p
+              i.fas.fa-phone
+              | +256 700 123 456
+            p
+              i.fas.fa-envelope
+              | support@young4chicks.ug
+          
+          .footer-section
+            h4 Office Hours
+            p Monday - Friday: 8:00 AM - 5:00 PM
+            p Saturday: 9:00 AM - 1:00 PM
+          
+          .footer-section
+            h4 Follow Us
+            .social-links
+              a(href='https://www.facebook.com/young4chicks', target='_blank')
+                i.fab.fa-facebook
+              a(href='https://www.twitter.com/young4chicks', target='_blank')
+                i.fab.fa-twitter
+              a(href='https://www.instagram.com/young4chicks', target='_blank')
+                i.fab.fa-instagram
+
+    // Modal for New Request (unchanged)
+    #newRequestModal.modal(style='display: none')
+      .modal-content
+        .modal-header
+          h3
+            i.fas.fa-plus-circle
+            | Submit New Request
+          span.close(onclick='closeModal()') &times;
+        
+        .modal-body
+          form#newRequestForm
+            .form-group
+              label(for='chickType') Chick Type
+              select#chickType(name='chickType', required)
+                option(value='') Select chick type
+                option(value='layers') Layers
+                option(value='broilers') Broilers
+                option(value='mixed') Mixed (Layers & Broilers)
+            
+            .form-group
+              label(for='breedType') Breed Type
+              select#breedType(name='breedType', required)
+                option(value='') Select breed type
+                option(value='local') Local
+                option(value='exotic') Exotic
+                option(value='mixed') Mixed (Local & Exotic)
+            
+            .form-group
+              label(for='chickCount') Number of Chicks
+              input#chickCount(type='number', name='chickCount', min='1', max='500', required)
+              small.form-help Starter farmers: Max 100 | Returning farmers: Max 500
+            
+            .form-group
+              label(for='specialRequests') Special Requests (Optional)
+              textarea#specialRequests(name='specialRequests', rows='3', placeholder='Any special requirements or notes...')
+            
+            .form-actions
+              button.btn.btn-secondary(type='button', onclick='closeModal()') Cancel
+              button.btn.btn-primary(type='submit') Submit Request
+
+    script(src='farmerdash.js')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//- doctype html
+//- html(lang="en")
+//-   head
+//-     meta(charset="UTF-8")
+//-     title Farmer Dashboard - Young for Chick
+//-     link(href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet")
+//-     style.
+//-       .action-btn {
+//-         margin-right: 5px;
+//-       }
+//-       table th,
+//-       table td {
+//-         vertical-align: middle !important;
+//-       }
+//-   body.container.mt-4
+//-     h2.mb-4 🐣 Farmer Dashboard
+
+//-     // Navigation Buttons
+//-     .mb-4
+//-       a.btn.btn-primary(href="/farmer-registration") Register Farmer
+//-       a.btn.btn-success(href="/feed-request") Feed Request
+//-       a.btn.btn-warning(href="/chick-payment") Chick Payment
+//-       a.btn.btn-info(href="/feed-payment") Feed Payment
+
+//-     // Chick Requests Table
+//-     h4 Chick Requests
+//-     table.table.table-bordered
+//-       thead.table-light
+//-         tr
+//-           th Farmer
+//-           th Age
+//-           th Type
+//-           th Quantity
+//-           th Category
+//-           th Chick Type
+//-           th Unit Price
+//-           th Total
+//-           th Date
+//-           th Status
+//-           th Actions
+//-       tbody
+//-         each request in chickRequests
+//-           tr
+//-             td #{request.farmer}
+//-             td #{request.age}
+//-             td #{request.farmerType}
+//-             td #{request.quantity}
+//-             td #{request.category}
+//-             td #{request.chicksType}
+//-             td #{request.unitPrice.toLocaleString()}
+//-             td #{(request.quantity * request.unitPrice).toLocaleString()}
+//-             td.text-capitalize #{request.status}
+//-             td
+//-               a.btn.btn-sm.btn-outline-primary.action-btn(href=/farmers/chicks/edit/${request._id}) Update
+//-               a.btn.btn-sm.btn-outline-danger.action-btn(href=/farmers/chicks/delete/${request._id}) Delete
+//-               a.btn.btn-sm.btn-outline-success.action-btn(href=/chick-payment/${request._id}) Pay
+
+//-     // Feed Requests Table
+//-     h4.mt-5 Feed Requests
+//-     table.table.table-bordered
+//-       thead.table-light
+//-         tr
+//-           th Farmer
+//-           th Feed Type
+//-           th Quantity
+//-           th Unit Price
+//-           th Total
+//-           th Status
+//-           th Actions
+//-       tbody
+//-         each request in feedRequests
+//-           tr
+//-             td #{request.farmer}
+//-             td #{request.type}
+//-             td #{request.quantity}
+//-             td #{request.unitPrice.toLocaleString()}
+//-             td #{(request.quantity * request.unitPrice).toLocaleString()}
+//-             td.text-capitalize #{request.status}
+//-             td
+//-               a.btn.btn-sm.btn-outline-primary.action-btn(href=/farmers/feeds/edit/${request._id}) Update
+//-               a.btn.btn-sm.btn-outline-danger.action-btn(href=/farmers/feeds/delete/${request._id}) Delete
+//-               a.btn.btn-sm.btn-outline-success.action-btn(href=/feed-payment/${request._id}) Pay

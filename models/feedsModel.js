@@ -6,12 +6,14 @@ const feedsSchema = new mongoose.Schema({
     required: true
   },
   amountFeeds: {
-    type: String,
-    required: true
+    type: Number,
+    required: true,
+    min: 0
   },
   feedCost: {
     type: Number,
-    required: true
+    required: true,
+    min: 0
   },
   feedDate: {
     type: Date,
@@ -20,9 +22,19 @@ const feedsSchema = new mongoose.Schema({
   nextFeeds: {
     type: Date
   },
-  comment:{
+  comment: {
     type: String
+  },
+  status: {
+    type: String,
+    enum: ['Pending', 'Approved', 'Rejected', 'Dispatched'],
+    default: 'Pending'
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   }
 }, { timestamps: true });
 
-module.exports = mongoose.model('feeds', feedsSchema);
+module.exports = mongoose.model('Feeds', feedsSchema);

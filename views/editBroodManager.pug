@@ -2,7 +2,7 @@ extends layout
 
 block content
   h2 Edit Brood Manager Details
-  form(action=`/brood-managers/edit/${broodManager._id}` method="POST")
+  form(action=`/broodManagers/edit/${broodManager._id}` method="POST")
     div
       label(for="name") Name:
       input(type="text" name="name" id="name" value=broodManager.name required)
@@ -27,3 +27,4 @@ block content
       label(for="approvalLimit") Approval Limit:
       input(type="number" name="approvalLimit" id="approvalLimit" value=broodManager.approvalLimit)
     button(type="submit") Save Changes
+

@@ -1,0 +1,454 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title Young4ChickS - Sales Rep Dashboard
+    link(rel='stylesheet', href='/css/salesRegDash.css')
+    link(href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css', rel='stylesheet')
+    
+  body
+    .dashboard-container
+      // Header Section
+      header.dashboard-header
+        .header-content
+          .logo-section
+            i.fas.fa-feather-alt.logo-icon
+            h1.logo-text Young4ChickS
+            span.tagline Sales Representative Portal
+          
+          .user-info
+            .user-avatar
+              i.fas.fa-user-tie
+            .user-details
+              h3#rep-name Sarah Nakato
+              p.user-type Sales Representative
+              small.shift-info Shift: 8:00 AM - 5:00 PM
+        
+        .header-stats
+          .stat-card
+            .stat-icon
+              i.fas.fa-phone
+            .stat-content
+              h4 Calls Today
+              span.stat-number 24
+          
+          .stat-card
+            .stat-icon
+              i.fas.fa-user-plus
+            .stat-content
+              h4 Farmers Registered
+              span.stat-number 12
+          
+          .stat-card.urgent
+            .stat-icon
+              i.fas.fa-clock
+            .stat-content
+              h4 Pending Dispatch
+              span.stat-number 8
+
+      // Main Dashboard Content
+      main.dashboard-main
+        .dashboard-grid
+          
+          // Quick Actions Section
+          .dashboard-section.quick-actions
+            .section-header
+              h2
+                i.fas.fa-bolt
+                | Quick Actions
+            
+            .action-grid
+              .action-card(onclick='showRegisterModal()')
+                .action-icon
+                  i.fas.fa-user-plus
+                .action-content
+                  h4 Register Farmer
+                  p Add new young farmer to system
+              
+              .action-card(onclick='showCallLogModal()')
+                .action-icon
+                  i.fas.fa-phone-alt
+                .action-content
+                  h4 Log Call
+                  p Record incoming farmer call
+              
+              .action-card(onclick='viewDispatchQueue()')
+                .action-icon
+                  i.fas.fa-truck
+                .action-content
+                  h4 Dispatch Queue
+                  p Process ready requests
+              
+              .action-card(onclick='searchFarmer()')
+                .action-icon
+                  i.fas.fa-search
+                .action-content
+                  h4 Find Farmer
+                  p Search farmer records
+
+          // Request Management Section
+          .dashboard-section.request-management
+            .section-header
+              h2
+                i.fas.fa-clipboard-list
+                | Request Management
+              .header-controls
+                select#statusFilter.filter-select(onchange='filterRequests()')
+                  option(value='all') All Requests
+                  option(value='pending-approval') Pending Approval
+                  option(value='approved') Approved - Ready to Dispatch
+                  option(value='dispatched') Dispatched
+                  option(value='cancelled') Cancelled
+            
+            .request-table-container
+              table.request-table
+                thead
+                  tr
+                    th Request ID
+                    th Farmer Name
+                    th Phone
+                    th Chicks
+                    th Status
+                    th Date
+                    th Actions
+                tbody
+                  tr.request-row(data-status='approved')
+                    td #YFC-2025-089
+                    td John Mukasa
+                    td +256 700 123 456
+                    td 200 Mixed
+                    td
+                      .status-badge.status-approved
+                        i.fas.fa-check
+                        | Ready to Dispatch
+                    td 15 Aug 2025
+                    td
+                      .action-buttons
+                        button.btn.btn-success.btn-sm(onclick='dispatchRequest("YFC-2025-089")')
+                          i.fas.fa-truck
+                          | Dispatch
+                        button.btn.btn-secondary.btn-sm(onclick='viewDetails("YFC-2025-089")')
+                          i.fas.fa-eye
+                          | View
+                  
+                  tr.request-row(data-status='pending-approval')
+                    td #YFC-2025-090
+                    td Mary Nalubega
+                    td +256 701 234 567
+                    td 150 Layers
+                    td
+                      .status-badge.status-pending
+                        i.fas.fa-clock
+                        | Pending Approval
+                    td 15 Aug 2025
+                    td
+                      .action-buttons
+                        button.btn.btn-secondary.btn-sm(onclick='contactFarmer("256701234567")')
+                          i.fas.fa-phone
+                          | Call
+                        button.btn.btn-secondary.btn-sm(onclick='viewDetails("YFC-2025-090")')
+                          i.fas.fa-eye
+                          | View
+                  
+                  tr.request-row(data-status='dispatched')
+                    td #YFC-2025-087
+                    td Peter Ssemakula
+                    td +256 702 345 678
+                    td 100 Broilers
+                    td
+                      .status-badge.status-dispatched
+                        i.fas.fa-check-circle
+                        | Dispatched
+                    td 14 Aug 2025
+                    td
+                      .action-buttons
+                        button.btn.btn-info.btn-sm(onclick='printReceipt("YFC-2025-087")')
+                          i.fas.fa-print
+                          | Receipt
+                        button.btn.btn-secondary.btn-sm(onclick='viewDetails("YFC-2025-087")')
+                          i.fas.fa-eye
+                          | View
+
+          // Manager Updates Section
+          .dashboard-section.manager-updates
+            .section-header
+              h2
+                i.fas.fa-bullhorn
+                | Manager Updates
+              .notification-count 5
+            
+            .updates-list
+              .update-item.unread
+                .update-icon
+                  i.fas.fa-check-circle
+                .update-content
+                  h4 Batch #45 Approved
+                  p 15 requests approved for dispatch. Stock updated: 2,500 chicks remaining.
+                  small.update-time 30 minutes ago
+                .update-actions
+                  button.btn.btn-sm.btn-primary(onclick='viewBatch(45)') View Batch
+              
+              .update-item.unread
+                .update-icon
+                  i.fas.fa-exclamation-triangle
+                .update-content
+                  h4 Low Stock Alert
+                  p Broiler chicks running low. Only 200 remaining. Contact supplier.
+                  small.update-time 2 hours ago
+                .update-actions
+                  button.btn.btn-sm.btn-warning(onclick='acknowledgeAlert("stock-low")') Acknowledge
+              
+              .update-item
+                .update-icon
+                  i.fas.fa-truck
+                .update-content
+                  h4 New Stock Arrival
+                  p 1,000 layer chicks received and added to inventory.
+                  small.update-time 4 hours ago
+                .update-actions
+                  button.btn.btn-sm.btn-secondary(onclick='viewStockUpdate()') View Details
+              
+              .update-item
+                .update-icon
+                  i.fas.fa-user-plus
+                .update-content
+                  h4 Registration Milestone
+                  p 500th farmer registered! Monthly target achieved.
+                  small.update-time 1 day ago
+
+          // Call Log Section
+          .dashboard-section.call-log
+            .section-header
+              h2
+                i.fas.fa-phone
+                | Recent Call Log
+              button.btn.btn-primary.btn-sm(onclick='exportCallLog()')
+                i.fas.fa-download
+                | Export Log
+            
+            .call-log-list
+              .call-item.missed
+                .call-icon
+                  i.fas.fa-phone-slash
+                .call-details
+                  h4 +256 703 456 789
+                  p Missed call - Attempted callback
+                  small.call-time 15 minutes ago
+                .call-actions
+                  button.btn.btn-sm.btn-outline(onclick='callBack("256703456789")')
+                    i.fas.fa-phone
+                    | Call Back
+              
+              .call-item.completed
+                .call-icon
+                  i.fas.fa-check-circle
+                .call-details
+                  h4 Agnes Namutebi - +256 704 567 890
+                  p Chick request submitted successfully
+                  small.call-time 1 hour ago
+                .call-actions
+                  button.btn.btn-sm.btn-secondary(onclick='viewCallNotes("call-001")')
+                    i.fas.fa-sticky-note
+                    | Notes
+              
+              .call-item.completed
+                .call-icon
+                  i.fas.fa-info-circle
+                .call-details
+                  h4 David Okello - +256 705 678 901
+                  p Information inquiry about feed delivery
+                  small.call-time 2 hours ago
+                .call-actions
+                  button.btn.btn-sm.btn-secondary(onclick='viewCallNotes("call-002")')
+                    i.fas.fa-sticky-note
+                    | Notes
+
+          // Performance Dashboard
+          .dashboard-section.performance
+            .section-header
+              h2
+                i.fas.fa-chart-bar
+                | Daily Performance
+            
+            .performance-grid
+              .performance-card
+                .performance-icon
+                  i.fas.fa-phone-volume
+                .performance-content
+                  h4 Calls Handled
+                  .performance-number 24
+                  .performance-target / 30 target
+                  .progress-bar
+                    .progress-fill(style='width: 80%')
+              
+              .performance-card
+                .performance-icon
+                  i.fas.fa-user-check
+                .performance-content
+                  h4 Farmers Registered
+                  .performance-number 12
+                  .performance-target / 15 target
+                  .progress-bar
+                    .progress-fill(style='width: 80%')
+              
+              .performance-card
+                .performance-icon
+                  i.fas.fa-shipping-fast
+                .performance-content
+                  h4 Requests Dispatched
+                  .performance-number 18
+                  .performance-target / 20 target
+                  .progress-bar
+                    .progress-fill(style='width: 90%')
+              
+              .performance-card
+                .performance-icon
+                  i.fas.fa-clock
+                .performance-content
+                  h4 Avg Response Time
+                  .performance-number 2.5
+                  .performance-target min
+                  .progress-bar
+                    .progress-fill(style='width: 85%')
+
+      // Footer
+      footer.dashboard-footer
+        .footer-content
+          .footer-section
+            h4 Contact Information
+            p
+              i.fas.fa-phone
+              | +256 700 123 456
+            p
+              i.fas.fa-envelope
+              | sales@young4chicks.ug
+          
+          .footer-section
+            h4 Emergency Contacts
+            p Manager: +256 701 234 567
+            p IT Support: +256 702 345 678
+          
+          .footer-section
+            h4 Quick Links
+            a(href='#') Staff Manual
+            a(href='#') Stock Updates
+            a(href='#') Report Issue
+
+    // Register Farmer Modal
+    #registerFarmerModal.modal(style='display: none')
+      .modal-content.large-modal
+        .modal-header
+          h3
+            i.fas.fa-user-plus
+            | Register New Farmer
+          span.close(onclick='closeModal("registerFarmerModal")') &times;
+        
+        .modal-body
+          form#registerFarmerForm
+            .form-row
+              .form-group.half-width
+                label(for='farmerName') Full Name
+                input#farmerName(type='text', name='farmerName', required, placeholder='Enter farmer\'s full name')
+              
+              .form-group.half-width
+                label(for='farmerAge') Age
+                input#farmerAge(type='number', name='farmerAge', min='18', max='30', required, placeholder='Age (18-30)')
+            
+            .form-row
+              .form-group.half-width
+                label(for='farmerGender') Gender
+                select#farmerGender(name='farmerGender', required)
+                  option(value='') Select gender
+                  option(value='male') Male
+                  option(value='female') Female
+              
+              .form-group.half-width
+                label(for='farmerPhone') Phone Number
+                input#farmerPhone(type='tel', name='farmerPhone', required, placeholder='+256 700 123 456')
+            
+            .form-row
+              .form-group.half-width
+                label(for='farmerNIN') Farmer NIN Number
+                input#farmerNIN(type='text', name='farmerNIN', required, placeholder='CM12345678901234')
+              
+              .form-group.half-width
+                label(for='farmerLocation') Location/Village
+                input#farmerLocation(type='text', name='farmerLocation', required, placeholder='Village, Parish, Sub-county')
+            
+            .form-section
+              h4
+                i.fas.fa-user-shield
+                | Recommender Information
+              
+              .form-row
+                .form-group.half-width
+                  label(for='recommenderName') Recommender Name
+                  input#recommenderName(type='text', name='recommenderName', required, placeholder='Full name of recommender')
+                
+                .form-group.half-width
+                  label(for='recommenderNIN') Recommender NIN
+                  input#recommenderNIN(type='text', name='recommenderNIN', required, placeholder='CM98765432109876')
+              
+              .form-group
+                label(for='recommenderRelation') Relationship to Farmer
+                select#recommenderRelation(name='recommenderRelation', required)
+                  option(value='') Select relationship
+                  option(value='parent') Parent/Guardian
+                  option(value='relative') Relative
+                  option(value='community-leader') Community Leader
+                  option(value='employer') Employer
+                  option(value='other') Other
+            
+            .form-actions
+              button.btn.btn-secondary(type='button', onclick='closeModal("registerFarmerModal")') Cancel
+              button.btn.btn-primary(type='submit')
+                i.fas.fa-save
+                | Register Farmer
+
+    // Call Log Modal
+    #callLogModal.modal(style='display: none')
+      .modal-content
+        .modal-header
+          h3
+            i.fas.fa-phone-alt
+            | Log Phone Call
+          span.close(onclick='closeModal("callLogModal")') &times;
+        
+        .modal-body
+          form#callLogForm
+            .form-group
+              label(for='callerPhone') Caller Phone Number
+              input#callerPhone(type='tel', name='callerPhone', required, placeholder='+256 700 123 456')
+            
+            .form-group
+              label(for='callType') Call Type
+              select#callType(name='callType', required)
+                option(value='') Select call type
+                option(value='new-request') New Chick Request
+                option(value='follow-up') Request Follow-up
+                option(value='information') General Information
+                option(value='complaint') Complaint/Issue
+                option(value='feed-inquiry') Feed Inquiry
+            
+            .form-group
+              label(for='callOutcome') Call Outcome
+              select#callOutcome(name='callOutcome', required)
+                option(value='') Select outcome
+                option(value='request-submitted') Request Submitted
+                option(value='information-provided') Information Provided
+                option(value='callback-required') Callback Required
+                option(value='issue-escalated') Issue Escalated
+                option(value='no-action-needed') No Action Needed
+            
+            .form-group
+              label(for='callNotes') Call Notes
+              textarea#callNotes(name='callNotes', rows='4', placeholder='Detailed notes about the call...')
+            
+            .form-actions
+              button.btn.btn-secondary(type='button', onclick='closeModal("callLogModal")') Cancel
+              button.btn.btn-primary(type='submit')
+                i.fas.fa-save
+                | Save Call Log
+
+    script(src='salesrep-dash.js')

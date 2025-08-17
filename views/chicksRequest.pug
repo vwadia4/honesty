@@ -1,0 +1,641 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title Young for Chicks - Request Form
+    link(href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css', rel='stylesheet')
+    style.
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+      }
+
+      .header {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+        padding: 40px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+        animation: float 20s linear infinite;
+      }
+
+      @keyframes float {
+        0% { transform: translateX(-50%) translateY(-50%) rotate(0deg); }
+        100% { transform: translateX(-50%) translateY(-50%) rotate(360deg); }
+      }
+
+      .header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .header p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        position: relative;
+        z-index: 1;
+      }
+
+      .chick-icon {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        display: block;
+        animation: bounce 2s infinite;
+      }
+
+      @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+        40% { transform: translateY(-10px); }
+        60% { transform: translateY(-5px); }
+      }
+
+      .form-container {
+        padding: 40px;
+      }
+
+      .price-info {
+        background: linear-gradient(135deg, #e8f5e8, #d4edda);
+        border: 2px solid #28a745;
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 30px;
+        text-align: center;
+      }
+
+      .price-info h3 {
+        color: #155724;
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+      }
+
+      .fixed-price {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #28a745;
+        margin: 10px 0;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-bottom: 30px;
+      }
+
+      .form-group {
+        position: relative;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #2d3748;
+        font-size: 0.95rem;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 15px;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: white;
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-color: #28a745;
+        box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+        transform: translateY(-2px);
+      }
+
+      .form-control:hover {
+        border-color: #cbd5e0;
+      }
+
+      .quantity-limits {
+        font-size: 0.85rem;
+        color: #dc3545;
+        margin-top: 5px;
+        display: none;
+      }
+
+      .quantity-limits.show {
+        display: block;
+      }
+
+      .radio-group {
+        display: flex;
+        gap: 20px;
+        margin-top: 10px;
+      }
+
+      .radio-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        padding: 10px 15px;
+        border: 2px solid #e2e8f0;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        background: white;
+        flex: 1;
+      }
+
+      .radio-item:hover {
+        border-color: #28a745;
+        background: #f0f9f0;
+      }
+
+      .radio-item input[type="radio"] {
+        accent-color: #28a745;
+      }
+
+      .radio-item input[type="radio"]:checked + label {
+        color: #28a745;
+        font-weight: 600;
+      }
+
+      .radio-item:has(input[type="radio"]:checked) {
+        border-color: #28a745;
+        background: #f0f9f0;
+      }
+
+      .price-display {
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border-radius: 15px;
+        padding: 20px;
+        margin-top: 20px;
+        border-left: 5px solid #28a745;
+        text-align: center;
+      }
+
+      .price-label {
+        font-size: 0.9rem;
+        color: #6c757d;
+        margin-bottom: 5px;
+      }
+
+      .price-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #28a745;
+        margin-bottom: 10px;
+      }
+
+      .submit-section {
+        text-align: center;
+        padding-top: 20px;
+        border-top: 1px solid #e2e8f0;
+      }
+
+      .submit-btn {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+        border: none;
+        padding: 18px 50px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 20px rgba(40, 167, 69, 0.3);
+      }
+
+      .submit-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 30px rgba(40, 167, 69, 0.4);
+      }
+
+      .submit-btn:active {
+        transform: translateY(-1px);
+      }
+
+      .submit-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .form-note {
+        background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+        border: 1px solid #f1c40f;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 30px;
+        text-align: center;
+      }
+
+      .form-note i {
+        color: #f39c12;
+        margin-right: 10px;
+      }
+
+      .error-message {
+        color: #dc3545;
+        font-size: 0.85rem;
+        margin-top: 5px;
+        display: none;
+      }
+
+      .error-message.show {
+        display: block;
+      }
+
+      @media (max-width: 768px) {
+        .form-grid {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+        
+        .radio-group {
+          flex-direction: column;
+          gap: 10px;
+        }
+        
+        .header h1 {
+          font-size: 2rem;
+        }
+        
+        .form-container {
+          padding: 20px;
+        }
+      }
+
+      .loading {
+        display: none;
+      }
+
+      .loading.show {
+        display: inline-block;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+  body
+    .container
+      .header
+        i.fas.fa-baby-carriage.chick-icon
+        h1
+          i.fas.fa-egg
+          |  Young for Chicks
+        p Submit your chick request with confidence
+
+      .form-container
+        //- Fixed Price Information
+        .price-info
+          h3
+            i.fas.fa-tag
+            |  Fixed Price for All Chicks
+          .fixed-price UGX 1,650
+          p(style='color: #155724; font-weight: 500;') Per chick - All types and categories
+
+        .form-note
+          i.fas.fa-info-circle
+          strong Important:
+          |  New farmers can order up to 100 chicks. Returning farmers can order up to 500 chicks.
+
+        form#chicksRequestForm(action='/request', method='POST')
+          //- Hidden fields
+          input(type='hidden', name='user', value='USER_ID_PLACEHOLDER', id='userId')
+          input(type='hidden', name='unitPrice', value='1650', id='unitPrice')
+          input(type='hidden', name='totalPrice', value='0', id='totalPrice')
+          input(type='hidden', name='status', value='Pending')
+          input(type='hidden', name='requestDate', id='requestDate')
+          input(type='hidden', name='salesRep', value='')
+
+          .form-grid
+            //- Farmer Information
+            .form-group
+              label(for='farmerName')
+                i.fas.fa-user
+                |  Farmer Full Name
+              input#farmerName.form-control(type='text', name='farmerName', placeholder='Enter your full name', required)
+
+            .form-group
+              label(for='age')
+                i.fas.fa-calendar-alt
+                |  Age
+              input#age.form-control(type='number', name='age', placeholder='Your age', min='18', max='100', required)
+
+            //- Farmer Type
+            .form-group
+              label(for='farmerType')
+                i.fas.fa-seedling
+                |  Farmer Type
+              select#farmerType.form-control(name='farmerType', required)
+                option(value='') Select farmer type
+                option(value='newFarmer') New Farmer (Max: 100 chicks)
+                option(value='returnFarmer') Returning Farmer (Max: 500 chicks)
+
+            //- Quantity
+            .form-group
+              label(for='quantity')
+                i.fas.fa-hashtag
+                |  Number of Chicks
+              input#quantity.form-control(type='number', name='quantity', placeholder='Select farmer type first', min='1', max='100', disabled, required)
+              .quantity-limits#quantityLimits Please select farmer type first to see quantity limits
+              .error-message#quantityError
+
+            //- Category
+            .form-group
+              label(for='category')
+                i.fas.fa-tags
+                |  Category
+              select#category.form-control(name='category', required)
+                option(value='') Select category
+                option(value='local') Local Breeds
+                option(value='exotic') Exotic Breeds
+
+          //- Chick Type (Radio buttons)
+          .form-group
+            label
+              i.fas.fa-dove
+              |  Chick Type
+            .radio-group
+              .radio-item
+                input#broiler(type='radio', name='chicksType', value='broiler', required)
+                label(for='broiler')
+                  i.fas.fa-drumstick-bite
+                  |  Broiler (Meat Production)
+              .radio-item
+                input#layer(type='radio', name='chicksType', value='layer', required)
+                label(for='layer')
+                  i.fas.fa-egg
+                  |  Layer (Egg Production)
+
+          //- Price Display
+          .form-group
+            .price-display
+              .price-label
+                i.fas.fa-calculator
+                |  Order Summary
+              div(style='display: flex; justify-content: space-between; margin: 10px 0;')
+                span Unit Price:
+                span(style='font-weight: 600;') UGX 1,650
+              div(style='display: flex; justify-content: space-between; margin: 10px 0;')
+                span Quantity:
+                span(style='font-weight: 600;')#quantityDisplay 0 chicks
+              hr(style='border-color: #28a745; margin: 15px 0;')
+              .price-value#totalPriceDisplay UGX 0
+              small(style='color: #6c757d;') *Price confirmed - No hidden charges
+
+          //- Submit Button
+          .submit-section
+            button.submit-btn#submitBtn(type='submit', disabled)
+              i.fas.fa-paper-plane
+              | Submit Request
+              i.fas.fa-spinner.loading#loadingSpinner
+            p(style='margin-top: 15px; color: #6c757d; font-size: 0.9rem;')
+              i.fas.fa-shield-alt
+              | Your request will be processed within 24 hours
+
+    script.
+      document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('chicksRequestForm');
+        const farmerTypeSelect = document.getElementById('farmerType');
+        const quantityInput = document.getElementById('quantity');
+        const categorySelect = document.getElementById('category');
+        const chicksTypeInputs = document.querySelectorAll('input[name="chicksType"]');
+        const totalPriceDisplay = document.getElementById('totalPriceDisplay');
+        const quantityDisplay = document.getElementById('quantityDisplay');
+        const quantityLimits = document.getElementById('quantityLimits');
+        const quantityError = document.getElementById('quantityError');
+        const submitBtn = document.getElementById('submitBtn');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        
+        // Fixed price per chick
+        const UNIT_PRICE = 1650;
+        
+        // Quantity limits based on farmer type
+        const QUANTITY_LIMITS = {
+          newFarmer: 100,
+          returnFarmer: 500
+        };
+        
+        // Set request date to current date
+        document.getElementById('requestDate').value = new Date().toISOString();
+
+        // Handle farmer type change
+        farmerTypeSelect.addEventListener('change', function() {
+          const farmerType = this.value;
+          
+          if (farmerType) {
+            const maxQuantity = QUANTITY_LIMITS[farmerType];
+            
+            // Enable quantity input and set limits
+            quantityInput.disabled = false;
+            quantityInput.setAttribute('max', maxQuantity);
+            quantityInput.placeholder = `Enter quantity (1-${maxQuantity} chicks)`;
+            
+            // Show quantity limits
+            quantityLimits.textContent = `${farmerType === 'newFarmer' ? 'New' : 'Returning'} farmers can order up to ${maxQuantity} chicks`;
+            quantityLimits.classList.add('show');
+            quantityLimits.style.color = '#28a745';
+            
+            // Reset quantity if it exceeds new limit
+            const currentQuantity = parseInt(quantityInput.value);
+            if (currentQuantity > maxQuantity) {
+              quantityInput.value = maxQuantity;
+              calculatePrice();
+            }
+          } else {
+            // Disable quantity input
+            quantityInput.disabled = true;
+            quantityInput.value = '';
+            quantityInput.placeholder = 'Select farmer type first';
+            quantityLimits.classList.remove('show');
+            calculatePrice();
+          }
+          
+          checkFormValidity();
+        });
+
+        // Handle quantity input with validation
+        quantityInput.addEventListener('input', function() {
+          const quantity = parseInt(this.value);
+          const farmerType = farmerTypeSelect.value;
+          
+          if (farmerType && quantity) {
+            const maxQuantity = QUANTITY_LIMITS[farmerType];
+            
+            if (quantity > maxQuantity) {
+              this.value = maxQuantity;
+              showQuantityError(`Maximum ${maxQuantity} chicks allowed for ${farmerType === 'newFarmer' ? 'new' : 'returning'} farmers`);
+            } else if (quantity < 1) {
+              this.value = 1;
+              showQuantityError('Minimum 1 chick required');
+            } else {
+              hideQuantityError();
+            }
+          }
+          
+          calculatePrice();
+          checkFormValidity();
+        });
+
+        function showQuantityError(message) {
+          quantityError.textContent = message;
+          quantityError.classList.add('show');
+          quantityInput.style.borderColor = '#dc3545';
+        }
+
+        function hideQuantityError() {
+          quantityError.classList.remove('show');
+          quantityInput.style.borderColor = '#28a745';
+        }
+
+        function calculatePrice() {
+          const quantity = parseInt(quantityInput.value) || 0;
+          const totalPrice = quantity * UNIT_PRICE;
+          
+          // Update hidden fields
+          document.getElementById('unitPrice').value = UNIT_PRICE;
+          document.getElementById('totalPrice').value = totalPrice;
+          
+          // Update display
+          quantityDisplay.textContent = `${quantity} chicks`;
+          totalPriceDisplay.textContent = `UGX ${totalPrice.toLocaleString()}`;
+          
+          if (quantity > 0) {
+            totalPriceDisplay.style.animation = 'pulse 0.5s ease-in-out';
+            setTimeout(() => {
+              totalPriceDisplay.style.animation = '';
+            }, 500);
+          }
+        }
+
+        function checkFormValidity() {
+          const farmerName = document.getElementById('farmerName').value.trim();
+          const age = document.getElementById('age').value;
+          const farmerType = farmerTypeSelect.value;
+          const quantity = parseInt(quantityInput.value);
+          const category = categorySelect.value;
+          const chicksType = document.querySelector('input[name="chicksType"]:checked');
+          
+          const isValid = farmerName && age && farmerType && quantity && quantity > 0 && category && chicksType;
+          
+          submitBtn.disabled = !isValid;
+        }
+
+        // Add event listeners for form validation
+        document.getElementById('farmerName').addEventListener('input', checkFormValidity);
+        document.getElementById('age').addEventListener('input', checkFormValidity);
+        categorySelect.addEventListener('change', checkFormValidity);
+        chicksTypeInputs.forEach(input => {
+          input.addEventListener('change', checkFormValidity);
+        });
+
+        // Form submission handling
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          // Final validation
+          const quantity = parseInt(quantityInput.value);
+          const farmerType = farmerTypeSelect.value;
+          const maxQuantity = QUANTITY_LIMITS[farmerType];
+          
+          if (quantity > maxQuantity) {
+            alert(`Error: ${farmerType === 'newFarmer' ? 'New' : 'Returning'} farmers can only order up to ${maxQuantity} chicks.`);
+            return;
+          }
+          
+          // Show loading spinner
+          loadingSpinner.classList.add('show');
+          submitBtn.disabled = true;
+          submitBtn.style.opacity = '0.7';
+
+          // Simulate form submission (replace with actual submission)
+          setTimeout(() => {
+            // For production, uncomment this line:
+            // form.submit();
+            
+            // For demo purposes
+            const totalPrice = quantity * UNIT_PRICE;
+            alert(`🎉 Request submitted successfully!\n\nOrder Details:\n• ${quantity} chicks\n• Total: UGX ${totalPrice.toLocaleString()}\n\nWe will contact you within 24 hours.`);
+            
+            // Reset loading state
+            loadingSpinner.classList.remove('show');
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = '1';
+            
+            // Reset form
+            form.reset();
+            quantityInput.disabled = true;
+            quantityLimits.classList.remove('show');
+            calculatePrice();
+            checkFormValidity();
+          }, 2000);
+        });
+
+        // Form validation styling
+        const inputs = document.querySelectorAll('.form-control');
+        inputs.forEach(input => {
+          input.addEventListener('invalid', function() {
+            this.style.borderColor = '#dc3545';
+            this.style.boxShadow = '0 0 0 3px rgba(220, 53, 69, 0.1)';
+          });
+          
+          input.addEventListener('input', function() {
+            if (this.checkValidity()) {
+              this.style.borderColor = '#28a745';
+              this.style.boxShadow = '0 0 0 3px rgba(40, 167, 69, 0.1)';
+            }
+          });
+        });
+
+        // Initialize
+        calculatePrice();
+        checkFormValidity();
+      });
+
+      // Add pulse animation
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes pulse {
+          0% { transform: scale(1); }
+          50% { transform: scale(1.05); }
+          100% { transform: scale(1); }
+        }
+      `;
+      document.head.appendChild(style);

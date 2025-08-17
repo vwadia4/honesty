@@ -5,13 +5,16 @@ const chickPaymentSchema = new mongoose.Schema({
     type: Date,
     required: true
   },
-  farmer: {
-    type: { type: mongoose.Schema.Types.ObjectId, ref: 'Farmer' },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   },
   amount: {
     type: Number,
-    required: true
+    required: true,
+    min: 0
   }
-});
+}, { timestamps: true });
 
-module.exports = mongoose.model('chickPayment', chickPaymentSchema);
+module.exports = mongoose.model('ChickPayment', chickPaymentSchema);
